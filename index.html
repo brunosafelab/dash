@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Safelab Dashboards</title>
+  <title>Safelab Dashboards e Vídeo Outubro Rosa</title>
   <meta charset="UTF-8">
   <style>
     body, html {
@@ -9,18 +9,27 @@
       height: 100%;
       overflow: hidden;
     }
-    iframe {
+    iframe, video {
       border: none;
       width: 100vw;
       height: 100vh;
+      display: none;
+      background: black;
     }
   </style>
 </head>
 <body>
-  <iframe id="dashboardFrame" src="" allowfullscreen></iframe>
+  <iframe id="dashboardFrame" allowfullscreen></iframe>
+  <video id="videoFrame"
+         src="https://raw.githubusercontent.com/brunosafelab/dash/main/media/outubro_rosa_safelab.mp4"
+         type="video/mp4"
+         autoplay
+         muted>
+    Seu navegador não suporta vídeo HTML5.
+  </video>
 
   <script>
-    const urls = [
+    const dashboards = [
       "https://app.powerbi.com/view?r=eyJrIjoiYjA5MWMzOGYtYzE2OC00ZDc5LTgyNTQtMzFhZWNjYjI4MzU0IiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=d304d0d29057d087d4cb",
       "https://app.powerbi.com/view?r=eyJrIjoiYjA5MWMzOGYtYzE2OC00ZDc5LTgyNTQtMzFhZWNjYjI4MzU0IiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=5cf509df9ea97c783299",
       "https://app.powerbi.com/view?r=eyJrIjoiYjA5MWMzOGYtYzE2OC00ZDc5LTgyNTQtMzFhZWNjYjI4MzU0IiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=29c7d977a21ac24c3843",
@@ -29,23 +38,38 @@
       "https://app.powerbi.com/view?r=eyJrIjoiNzU2YzM4MGEtZDkxOS00ZmQ3LTg2YWYtYWM5MWM1Y2VmOTdkIiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=e100614b95e6a2450e58",
       "https://app.powerbi.com/view?r=eyJrIjoiNzU2YzM4MGEtZDkxOS00ZmQ3LTg2YWYtYWM5MWM1Y2VmOTdkIiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=fa0ee71d4a2835c632fd"
     ];
-    let currentIndex = 0;
-    const iframe = document.getElementById('dashboardFrame');
+    const dashboardDisplayTime = 60000; // 60 segundos por dashboard (ajuste se quiser)
 
-    function changeDashboard() {
-      iframe.src = urls[currentIndex];
-      currentIndex = (currentIndex + 1) % urls.length;
+    const video = document.getElementById('videoFrame');
+    const iframe = document.getElementById('dashboardFrame');
+    let currentDashboard = 0;
+
+    function showVideo() {
+      iframe.style.display = 'none';
+      video.style.display = 'block';
+      video.currentTime = 0;
+      video.play();
     }
 
-    // Inicializa o primeiro dashboard
-    changeDashboard();
+    function showDashboards() {
+      video.style.display = 'none';
+      iframe.style.display = 'block';
+      iframe.src = dashboards[currentDashboard];
+      setTimeout(() => {
+        currentDashboard++;
+        if (currentDashboard < dashboards.length) {
+          showDashboards();
+        } else {
+          currentDashboard = 0;
+          showVideo();
+        }
+      }, dashboardDisplayTime);
+    }
 
-    // Troca o dashboard a cada 30 segundos (30000 ms)
-    setInterval(changeDashboard, 60000);
+    video.addEventListener('ended', showDashboards);
+
+    // Iniciar ciclo: primeiro o vídeo
+    showVideo();
   </script>
 </body>
 </html>
-
-
-
-
