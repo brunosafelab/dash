@@ -30,16 +30,41 @@
 
   <script>
     const dashboards = [
-      "https://app.powerbi.com/view?r=eyJrIjoiYjA5MWMzOGYtYzE2OC00ZDc5LTgyNTQtMzFhZWNjYjI4MzU0IiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=d304d0d29057d087d4cb",
-      "https://app.powerbi.com/view?r=eyJrIjoiYjA5MWMzOGYtYzE2OC00ZDc5LTgyNTQtMzFhZWNjYjI4MzU0IiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=5cf509df9ea97c783299",
-      "https://app.powerbi.com/view?r=eyJrIjoiYjA5MWMzOGYtYzE2OC00ZDc5LTgyNTQtMzFhZWNjYjI4MzU0IiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=29c7d977a21ac24c3843",
-      "https://app.powerbi.com/view?r=eyJrIjoiNjEzODVlYTctODg2MS00MGVjLTg0MTItZjJkNzE2NGMxMjg4IiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9",
-      "https://app.powerbi.com/view?r=eyJrIjoiM2Y1ZDM4ZjEtOWJjZi00MGZlLWEzNmQtOGFkNDRjMGFmMDg5IiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=7a7b9d9949b7b4616868",
+      // Dashboard Recebimentos - Page 1: Recebimentos - Tempo: 60 segundos
       "https://app.powerbi.com/view?r=eyJrIjoiNzU2YzM4MGEtZDkxOS00ZmQ3LTg2YWYtYWM5MWM1Y2VmOTdkIiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=e100614b95e6a2450e58",
+      // Dashboard Recebimentos - Page 3: Notificações - Tempo: 60 segundos
       "https://app.powerbi.com/view?r=eyJrIjoiNzU2YzM4MGEtZDkxOS00ZmQ3LTg2YWYtYWM5MWM1Y2VmOTdkIiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=fa0ee71d4a2835c632fd",
+      // Dashboard Coletas - Page 1: Controle - Tempo: 5 minutos
+      "https://app.powerbi.com/view?r=eyJrIjoiZDkzNTE5NmMtZjNjNC00NWViLWI5YjItNDdlNzQzMjhhOWM3IiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=aeba9f2a1de706bd1d12",
+      // Dashboard Coletas - Page 2: Coletas - Tempo: 60 segundos
+      "https://app.powerbi.com/view?r=eyJrIjoiZDkzNTE5NmMtZjNjNC00NWViLWI5YjItNDdlNzQzMjhhOWM3IiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=c5040042793a25980419",
+      // Dashboard Entregas - Page 2- Entregas - Tempo: 60 segundos
+      "https://app.powerbi.com/view?r=eyJrIjoiM2Y1ZDM4ZjEtOWJjZi00MGZlLWEzNmQtOGFkNDRjMGFmMDg5IiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=7a7b9d9949b7b4616868",      
+      // Dashboard Astrazeneca - Page 1: Overview - Tempo: 60 segundos
+      "https://app.powerbi.com/view?r=eyJrIjoiYjA5MWMzOGYtYzE2OC00ZDc5LTgyNTQtMzFhZWNjYjI4MzU0IiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=d304d0d29057d087d4cb",
+      // Dashboard Astrazeneca - Page 2: Base - Tempo: 90 segundos
+      "https://app.powerbi.com/view?r=eyJrIjoiYjA5MWMzOGYtYzE2OC00ZDc5LTgyNTQtMzFhZWNjYjI4MzU0IiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=5cf509df9ea97c783299",
+      // Dashboard Astrazeneca - Page 3: Outros - Tempo: 45 segundos
+      "https://app.powerbi.com/view?r=eyJrIjoiYjA5MWMzOGYtYzE2OC00ZDc5LTgyNTQtMzFhZWNjYjI4MzU0IiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=29c7d977a21ac24c3843",
+      // Dashboard Ocorrências - Page 1: Ocorrências - Tempo: 45 segundos
       "https://app.powerbi.com/view?r=eyJrIjoiODI0MDNlYmItZGM5Ny00ZjFjLTg3OTUtMTRkMGY1ODNiODRhIiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9"
+      // Dashboard Carbono - Page 1: Carbono - Tempo: 45 segundos
+      "https://app.powerbi.com/view?r=eyJrIjoiNjEzODVlYTctODg2MS00MGVjLTg0MTItZjJkNzE2NGMxMjg4IiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9",  
     ];
-    const dashboardDisplayTime = 60000; // 60 segundos por dashboard (ajuste se quiser)
+
+    // Tempos específicos para cada dashboard em milissegundos
+    const dashboardDisplayTimes = [
+      60000, // Dashboard Recebimentos - Page 1: Recebimentos - Tempo: 60 segundos
+      60000, // Dashboard Recebimentos - Page 3: Notificações - Tempo: 60 segundos
+      300000, // Dashboard Coletas - Page 1: Controle - Tempo: 5 minutos
+      60000, // Dashboard Coletas - Page 2: Coletas - Tempo: 60 segundos
+      60000, // Dashboard Entregas - Page 2- Entregas - Tempo: 60 segundos
+      60000, // Dashboard Astrazeneca - Page 1: Overview - Tempo: 60 segundos
+      90000, // Dashboard Astrazeneca - Page 2: Base - Tempo: 90 segundos
+      45000, // Dashboard Astrazeneca - Page 3: Outros - Tempo: 45 segundos
+      45000, // Dashboard Ocorrências - Page 1: Ocorrências - Tempo: 45 segundos
+      45000, // Dashboard Carbono - Page 1: Carbono - Tempo: 45 segundos
+    ];
 
     const video = document.getElementById('videoFrame');
     const iframe = document.getElementById('dashboardFrame');
@@ -64,7 +89,7 @@
           currentDashboard = 0;
           showVideo();
         }
-      }, dashboardDisplayTime);
+      }, dashboardDisplayTimes[currentDashboard]);
     }
 
     video.addEventListener('ended', showDashboards);
@@ -74,4 +99,3 @@
   </script>
 </body>
 </html>
-
