@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Safelab Dashboards e Vídeo Outubro Rosa</title>
   <style>
     body, html {
@@ -10,6 +10,7 @@
       overflow: hidden;
       background: black;
     }
+
     iframe, video {
       border: none;
       width: 100vw;
@@ -21,6 +22,7 @@
       left: 0;
       transition: opacity 0.5s ease;
     }
+
     iframe.visible, video.visible {
       opacity: 1;
       display: block !important;
@@ -29,10 +31,10 @@
   </style>
 </head>
 <body>
-  <!-- Área onde será exibido o dashboard -->
+  <!-- Exibe dashboards -->
   <iframe id="dashboardFrame" allowfullscreen></iframe>
 
-  <!-- Vídeo Outubro Rosa Safelab: começa a sequência -->
+  <!-- Exibe vídeo de abertura (Outubro Rosa) -->
   <video
     id="videoFrame"
     src="media/outubro_rosa_safelab.mp4"
@@ -44,87 +46,95 @@
   </video>
 
   <script>
-    // Lista de dashboards com comentários (ordem e identificação)
+    // Lista dos dashboards Power BI com comentários identificando cada página
     const dashboards = [
-      // Recebimentos - Página 1
+      // Recebimentos - Página 1: Recebimentos
       "https://app.powerbi.com/view?r=eyJrIjoiNzU2YzM4MGEtZDkxOS00ZmQ3LTg2YWYtYWM5MWM1Y2VmOTdkIiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=e100614b95e6a2450e58",
-      // Recebimentos - Página 3
+
+      // Recebimentos - Página 3: Notificações
       "https://app.powerbi.com/view?r=eyJrIjoiNzU2YzM4MGEtZDkxOS00ZmQ3LTg2YWYtYWM5MWM1Y2VmOTdkIiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=fa0ee71d4a2835c632fd",
-      // Coletas - Página 1
+
+      // Coletas - Página 1: Controle
       "https://app.powerbi.com/view?r=eyJrIjoiODQ5NGQwYzMtNzAxMC00Nzk4LWJlM2EtN2RiZjJiNDVjMjFhIiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=aeba9f2a1de706bd1d12",
-      // Coletas - Página 2
+
+      // Coletas - Página 2: Coletas
       "https://app.powerbi.com/view?r=eyJrIjoiODQ5NGQwYzMtNzAxMC00Nzk4LWJlM2EtN2RiZjJiNDVjMjFhIiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=c5040042793a25980419",
-      // Entregas - Página 2
+
+      // Entregas - Página 2: Entregas
       "https://app.powerbi.com/view?r=eyJrIjoiM2Y1ZDM4ZjEtOWJjZi00MGZlLWEzNmQtOGFkNDRjMGFmMDg5IiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=7a7b9d9949b7b4616868",
-      // Astrazeneca - Página 1
+
+      // Astrazeneca - Página 1: Overview
       "https://app.powerbi.com/view?r=eyJrIjoiYjA5MWMzOGYtYzE2OC00ZDc5LTgyNTQtMzFhZWNjYjI4MzU0IiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=d304d0d29057d087d4cb",
-      // Astrazeneca - Página 2
+
+      // Astrazeneca - Página 2: Base
       "https://app.powerbi.com/view?r=eyJrIjoiYjA5MWMzOGYtYzE2OC00ZDc5LTgyNTQtMzFhZWNjYjI4MzU0IiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=5cf509df9ea97c783299",
-      // Astrazeneca - Página 3
+
+      // Astrazeneca - Página 3: Outros
       "https://app.powerbi.com/view?r=eyJrIjoiYjA5MWMzOGYtYzE2OC00ZDc5LTgyNTQtMzFhZWNjYjI4MzU0IiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=29c7d977a21ac24c3843",
-      // Ocorrências - Página 1
+
+      // Ocorrências - Página 1: Ocorrências
       "https://app.powerbi.com/view?r=eyJrIjoiODI0MDNlYmItZGM5Ny00ZjFjLTg3OTUtMTRkMGY1ODNiODRhIiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9",
-      // Carbono - Página 1
+
+      // Carbono - Página 1: Carbono
       "https://app.powerbi.com/view?r=eyJrIjoiNjEzODVlYTctODg2MS00MGVjLTg0MTItZjJkNzE2NGMxMjg4IiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9"
     ];
 
-    // Tempos em ms (com comentários indicando cada tempo correspondente ao dashboard)
+    // Tempos (em milissegundos)
     const dashboardDisplayTimes = [
-      10000,   // Recebimentos - Página 1
-      10000,   // Recebimentos - Página 3
-      10000,  // Coletas - Página 1 (5 minutos)
-      10000,   // Coletas - Página 2
-      10000,   // Entregas - Página 2
-      10000,   // Astrazeneca - Página 1
-      10000,   // Astrazeneca - Página 2
-      10000,   // Astrazeneca - Página 3
-      10000,   // Ocorrências - Página 1
-      10000    // Carbono - Página 1
+      5000,  // Recebimentos - Página 1
+      5000,  // Recebimentos - Página 3
+      5000, // Coletas - Página 1 (5 minutos)
+      5000,  // Coletas - Página 2
+      5000,  // Entregas - Página 2
+      5000,  // Astrazeneca - Página 1
+      5000,  // Astrazeneca - Página 2
+      5000,  // Astrazeneca - Página 3
+      5000,  // Ocorrências - Página 1
+      5000   // Carbono - Página 1
     ];
 
     const video = document.getElementById('videoFrame');
     const iframe = document.getElementById('dashboardFrame');
     let currentDashboard = 0;
 
-    // Exibe o vídeo de início (sempre inicia por aqui)
+    // Função para exibir o vídeo (início e reinício)
     function showVideo() {
       iframe.classList.remove('visible');
       iframe.src = '';
       video.classList.add('visible');
+      video.pause();
       video.currentTime = 0;
-      if (video.readyState >= 2) {
+      video.load();
+
+      video.addEventListener('canplay', () => {
         video.play().catch(() => showDashboards());
-      } else {
-        video.addEventListener('loadeddata', () => {
-          video.play().catch(() => showDashboards());
-        }, { once: true });
-      }
+      }, { once: true });
     }
 
-    // Exibe os dashboards em sequência
+    // Função para alternar dashboards
     function showDashboards() {
       video.classList.remove('visible');
       iframe.classList.add('visible');
       iframe.src = dashboards[currentDashboard];
+
       const time = dashboardDisplayTimes[currentDashboard];
       setTimeout(() => {
         currentDashboard++;
         if (currentDashboard < dashboards.length) {
           showDashboards();
         } else {
-          currentDashboard = 0;
-          showVideo(); // VOLTA PARA O VÍDEO
+          currentDashboard = 0; // Reinicia sequência
+          showVideo(); // Volta ao vídeo e o ciclo recomeça
         }
       }, time);
     }
 
-    // Eventos para quando o vídeo terminar ou der erro
+    // Eventos do vídeo
     video.addEventListener('ended', showDashboards);
     video.addEventListener('error', showDashboards);
 
-    // Garante que começa pelo vídeo
+    // Inicia ciclo pelo vídeo
     showVideo();
   </script>
 </body>
 </html>
-
