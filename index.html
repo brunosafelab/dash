@@ -1,30 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-  <title>Safelab Dashboards e Vídeo Outubro Rosa</title>
   <meta charset="UTF-8">
+  <title>Safelab Dashboards e Vídeo Outubro Rosa</title>
   <style>
     body, html {
       margin: 0;
       height: 100%;
       overflow: hidden;
+      background: black;
     }
+
     iframe, video {
       border: none;
       width: 100vw;
       height: 100vh;
-      display: none;
       background: black;
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    iframe.visible, video.visible {
+      opacity: 1;
+      display: block !important;
+      pointer-events: auto;
     }
   </style>
 </head>
 <body>
   <iframe id="dashboardFrame" allowfullscreen></iframe>
-  <video id="videoFrame"
-         src="https://raw.githubusercontent.com/brunosafelab/dash/main/media/outubro_rosa_safelab.mp4"
-         type="video/mp4"
-         autoplay
-         muted>
+
+  <video
+    id="videoFrame"
+    src="https://raw.githubusercontent.com/brunosafelab/dash/main/media/outubro_rosa_safelab.mp4"
+    type="video/mp4"
+    muted>
     Seu navegador não suporta vídeo HTML5.
   </video>
 
@@ -38,8 +51,8 @@
       "https://app.powerbi.com/view?r=eyJrIjoiODQ5NGQwYzMtNzAxMC00Nzk4LWJlM2EtN2RiZjJiNDVjMjFhIiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=aeba9f2a1de706bd1d12",
       // Dashboard Coletas - Page 2: Coletas - Tempo: 60 segundos
       "https://app.powerbi.com/view?r=eyJrIjoiODQ5NGQwYzMtNzAxMC00Nzk4LWJlM2EtN2RiZjJiNDVjMjFhIiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=c5040042793a25980419",
-      // Dashboard Entregas - Page 2- Entregas - Tempo: 60 segundos
-      "https://app.powerbi.com/view?r=eyJrIjoiM2Y1ZDM4ZjEtOWJjZi00MGZlLWEzNmQtOGFkNDRjMGFmMDg5IiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=7a7b9d9949b7b4616868",      
+      // Dashboard Entregas - Page 2: Entregas - Tempo: 60 segundos
+      "https://app.powerbi.com/view?r=eyJrIjoiM2Y1ZDM4ZjEtOWJjZi00MGZlLWEzNmQtOGFkNDRjMGFmMDg5IiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=7a7b9d9949b7b4616868",
       // Dashboard Astrazeneca - Page 1: Overview - Tempo: 60 segundos
       "https://app.powerbi.com/view?r=eyJrIjoiYjA5MWMzOGYtYzE2OC00ZDc5LTgyNTQtMzFhZWNjYjI4MzU0IiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=d304d0d29057d087d4cb",
       // Dashboard Astrazeneca - Page 2: Base - Tempo: 90 segundos
@@ -54,16 +67,16 @@
 
     // Tempos específicos para cada dashboard em milissegundos
     const dashboardDisplayTimes = [
-      60000, // Dashboard Recebimentos - Page 1: Recebimentos - Tempo: 60 segundos
-      60000, // Dashboard Recebimentos - Page 3: Notificações - Tempo: 60 segundos
-      300000, // Dashboard Coletas - Page 1: Controle - Tempo: 5 minutos
-      60000, // Dashboard Coletas - Page 2: Coletas - Tempo: 60 segundos
-      60000, // Dashboard Entregas - Page 2- Entregas - Tempo: 60 segundos
-      60000, // Dashboard Astrazeneca - Page 1: Overview - Tempo: 60 segundos
-      90000, // Dashboard Astrazeneca - Page 2: Base - Tempo: 90 segundos
-      45000, // Dashboard Astrazeneca - Page 3: Outros - Tempo: 45 segundos
-      45000, // Dashboard Ocorrências - Page 1: Ocorrências - Tempo: 45 segundos
-      45000  // Dashboard Carbono - Page 1: Carbono - Tempo: 45 segundos
+      60000,  // Dashboard Recebimentos - Page 1: Recebimentos
+      60000,  // Dashboard Recebimentos - Page 3: Notificações
+      300000, // Dashboard Coletas - Page 1: Controle
+      60000,  // Dashboard Coletas - Page 2: Coletas
+      60000,  // Dashboard Entregas - Page 2: Entregas
+      60000,  // Dashboard Astrazeneca - Page 1: Overview
+      90000,  // Dashboard Astrazeneca - Page 2: Base
+      45000,  // Dashboard Astrazeneca - Page 3: Outros
+      45000,  // Dashboard Ocorrências - Page 1: Ocorrências
+      45000   // Dashboard Carbono - Page 1: Carbono
     ];
 
     const video = document.getElementById('videoFrame');
@@ -71,16 +84,23 @@
     let currentDashboard = 0;
 
     function showVideo() {
-      iframe.style.display = 'none';
-      video.style.display = 'block';
+      iframe.classList.remove('visible');
+      video.classList.add('visible');
       video.currentTime = 0;
-      video.play();
+
+      // Garante que o vídeo carregue antes de começar
+      video.pause();
+      video.addEventListener('loadedmetadata', () => {
+        video.play();
+      }, { once: true });
     }
 
     function showDashboards() {
-      video.style.display = 'none';
-      iframe.style.display = 'block';
+      video.classList.remove('visible');
+      iframe.classList.add('visible');
       iframe.src = dashboards[currentDashboard];
+
+      const time = dashboardDisplayTimes[currentDashboard];
       setTimeout(() => {
         currentDashboard++;
         if (currentDashboard < dashboards.length) {
@@ -89,14 +109,15 @@
           currentDashboard = 0;
           showVideo();
         }
-      }, dashboardDisplayTimes[currentDashboard]);
+      }, time);
     }
 
+    // Eventos para alternância entre vídeo e dashboards
     video.addEventListener('ended', showDashboards);
+    video.addEventListener('error', showDashboards);
 
-    // Iniciar ciclo: primeiro o vídeo
+    // Iniciar ciclo com o vídeo primeiro
     showVideo();
   </script>
 </body>
 </html>
-
