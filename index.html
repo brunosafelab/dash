@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Safelab Dashboards e Vídeo Outubro Rosa</title>
   <style>
     body, html {
@@ -10,7 +10,6 @@
       overflow: hidden;
       background: black;
     }
-
     iframe, video {
       border: none;
       width: 100vw;
@@ -22,7 +21,7 @@
       left: 0;
       transition: opacity 0.5s ease;
     }
-
+    /* Classe que torna visível o elemento */
     iframe.visible, video.visible {
       opacity: 1;
       display: block !important;
@@ -31,10 +30,9 @@
   </style>
 </head>
 <body>
-  <!-- Dashboard será exibido aqui -->
+  <!-- Área para dashboards -->
   <iframe id="dashboardFrame" allowfullscreen></iframe>
-
-  <!-- Vídeo institucional Outubro Rosa -->
+  <!-- Vídeo de início -->
   <video
     id="videoFrame"
     src="https://raw.githubusercontent.com/brunosafelab/dash/main/media/outubro_rosa_safelab.mp4"
@@ -44,46 +42,36 @@
     playsinline>
     Seu navegador não suporta vídeo HTML5.
   </video>
-
   <script>
-    // Lista de dashboards e páginas Power BI
+    // Lista de URLs dos dashboards (com comentários identificando cada um)
     const dashboards = [
-      // Recebimentos - Página 1: Recebimentos (60s)
+      // Recebimentos - Página 1
       "https://app.powerbi.com/view?r=eyJrIjoiNzU2YzM4MGEtZDkxOS00ZmQ3LTg2YWYtYWM5MWM1Y2VmOTdkIiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=e100614b95e6a2450e58",
-
-      // Recebimentos - Página 3: Notificações (60s)
+      // Recebimentos - Página 3
       "https://app.powerbi.com/view?r=eyJrIjoiNzU2YzM4MGEtZDkxOS00ZmQ3LTg2YWYtYWM5MWM1Y2VmOTdkIiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=fa0ee71d4a2835c632fd",
-
-      // Coletas - Página 1: Controle (5 min)
+      // Coletas - Página 1
       "https://app.powerbi.com/view?r=eyJrIjoiODQ5NGQwYzMtNzAxMC00Nzk4LWJlM2EtN2RiZjJiNDVjMjFhIiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=aeba9f2a1de706bd1d12",
-
-      // Coletas - Página 2: Coletas (60s)
+      // Coletas - Página 2
       "https://app.powerbi.com/view?r=eyJrIjoiODQ5NGQwYzMtNzAxMC00Nzk4LWJlM2EtN2RiZjJiNDVjMjFhIiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=c5040042793a25980419",
-
-      // Entregas - Página 2: Entregas (60s)
+      // Entregas - Página 2
       "https://app.powerbi.com/view?r=eyJrIjoiM2Y1ZDM4ZjEtOWJjZi00MGZlLWEzNmQtOGFkNDRjMGFmMDg5IiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=7a7b9d9949b7b4616868",
-
-      // Astrazeneca - Página 1: Overview (60s)
+      // Astrazeneca - Página 1
       "https://app.powerbi.com/view?r=eyJrIjoiYjA5MWMzOGYtYzE2OC00ZDc5LTgyNTQtMzFhZWNjYjI4MzU0IiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=d304d0d29057d087d4cb",
-
-      // Astrazeneca - Página 2: Base (90s)
+      // Astrazeneca - Página 2
       "https://app.powerbi.com/view?r=eyJrIjoiYjA5MWMzOGYtYzE2OC00ZDc5LTgyNTQtMzFhZWNjYjI4MzU0IiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=5cf509df9ea97c783299",
-
-      // Astrazeneca - Página 3: Outros (45s)
+      // Astrazeneca - Página 3
       "https://app.powerbi.com/view?r=eyJrIjoiYjA5MWMzOGYtYzE2OC00ZDc5LTgyNTQtMzFhZWNjYjI4MzU0IiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=29c7d977a21ac24c3843",
-
-      // Ocorrências - Página 1: Ocorrências (45s)
+      // Ocorrências - Página 1
       "https://app.powerbi.com/view?r=eyJrIjoiODI0MDNlYmItZGM5Ny00ZjFjLTg3OTUtMTRkMGY1ODNiODRhIiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9",
-
-      // Carbono - Página 1: Carbono (45s)
+      // Carbono - Página 1
       "https://app.powerbi.com/view?r=eyJrIjoiNjEzODVlYTctODg2MS00MGVjLTg0MTItZjJkNzE2NGMxMjg4IiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9"
     ];
 
-    // Tempos para exibição de cada dashboard (em milissegundos)
+    // Tempos de exibição (em ms)
     const dashboardDisplayTimes = [
       60000,  // Recebimentos - Página 1
       60000,  // Recebimentos - Página 3
-      300000, // Coletas - Página 1 (5 minutos)
+      300000, // Coletas - Página 1 (5 min)
       60000,  // Coletas - Página 2
       60000,  // Entregas - Página 2
       60000,  // Astrazeneca - Página 1
@@ -97,45 +85,50 @@
     const iframe = document.getElementById('dashboardFrame');
     let currentDashboard = 0;
 
-    // Exibe o vídeo
+    // Função para iniciar com o vídeo
     function showVideo() {
       iframe.classList.remove('visible');
-      iframe.src = '';
+      iframe.src = ''; // Limpa o iframe
       video.classList.add('visible');
       video.currentTime = 0;
-
+      // Tenta reproduzir o vídeo assim que estiver pronto
       if (video.readyState >= 2) {
         video.play().catch(() => showDashboards());
       } else {
+        // Aguarda o carregamento
         video.addEventListener('loadeddata', () => {
           video.play().catch(() => showDashboards());
         }, { once: true });
       }
     }
 
-    // Exibe os dashboards em sequência
+    // Função para mostrar dashboards
     function showDashboards() {
+      // Esconde o vídeo
       video.classList.remove('visible');
+      // Mostra o dashboard atual
       iframe.classList.add('visible');
       iframe.src = dashboards[currentDashboard];
 
+      // Agenda a próxima troca
       const time = dashboardDisplayTimes[currentDashboard];
       setTimeout(() => {
         currentDashboard++;
         if (currentDashboard < dashboards.length) {
           showDashboards();
         } else {
+          // Reinicia o ciclo, voltando ao vídeo
           currentDashboard = 0;
           showVideo();
         }
       }, time);
     }
 
-    // Eventos de término e erro do vídeo
+    // Eventos de fim ou erro do vídeo para avançar
     video.addEventListener('ended', showDashboards);
     video.addEventListener('error', showDashboards);
 
-    // Inicia o ciclo com o vídeo primeiro
+    // Começa com o vídeo
     showVideo();
   </script>
 </body>
