@@ -31,70 +31,89 @@
   </style>
 </head>
 <body>
+  <!-- Dashboard será exibido aqui -->
   <iframe id="dashboardFrame" allowfullscreen></iframe>
 
+  <!-- Vídeo institucional Outubro Rosa -->
   <video
     id="videoFrame"
     src="https://raw.githubusercontent.com/brunosafelab/dash/main/media/outubro_rosa_safelab.mp4"
     type="video/mp4"
-    muted>
+    autoplay
+    muted
+    playsinline>
     Seu navegador não suporta vídeo HTML5.
   </video>
 
   <script>
+    // Lista de dashboards e páginas Power BI
     const dashboards = [
-      // Dashboard Recebimentos - Page 1: Recebimentos - Tempo: 60 segundos
+      // Recebimentos - Página 1: Recebimentos (60s)
       "https://app.powerbi.com/view?r=eyJrIjoiNzU2YzM4MGEtZDkxOS00ZmQ3LTg2YWYtYWM5MWM1Y2VmOTdkIiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=e100614b95e6a2450e58",
-      // Dashboard Recebimentos - Page 3: Notificações - Tempo: 60 segundos
+
+      // Recebimentos - Página 3: Notificações (60s)
       "https://app.powerbi.com/view?r=eyJrIjoiNzU2YzM4MGEtZDkxOS00ZmQ3LTg2YWYtYWM5MWM1Y2VmOTdkIiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=fa0ee71d4a2835c632fd",
-      // Dashboard Coletas - Page 1: Controle - Tempo: 5 minutos
+
+      // Coletas - Página 1: Controle (5 min)
       "https://app.powerbi.com/view?r=eyJrIjoiODQ5NGQwYzMtNzAxMC00Nzk4LWJlM2EtN2RiZjJiNDVjMjFhIiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=aeba9f2a1de706bd1d12",
-      // Dashboard Coletas - Page 2: Coletas - Tempo: 60 segundos
+
+      // Coletas - Página 2: Coletas (60s)
       "https://app.powerbi.com/view?r=eyJrIjoiODQ5NGQwYzMtNzAxMC00Nzk4LWJlM2EtN2RiZjJiNDVjMjFhIiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=c5040042793a25980419",
-      // Dashboard Entregas - Page 2: Entregas - Tempo: 60 segundos
+
+      // Entregas - Página 2: Entregas (60s)
       "https://app.powerbi.com/view?r=eyJrIjoiM2Y1ZDM4ZjEtOWJjZi00MGZlLWEzNmQtOGFkNDRjMGFmMDg5IiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=7a7b9d9949b7b4616868",
-      // Dashboard Astrazeneca - Page 1: Overview - Tempo: 60 segundos
+
+      // Astrazeneca - Página 1: Overview (60s)
       "https://app.powerbi.com/view?r=eyJrIjoiYjA5MWMzOGYtYzE2OC00ZDc5LTgyNTQtMzFhZWNjYjI4MzU0IiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=d304d0d29057d087d4cb",
-      // Dashboard Astrazeneca - Page 2: Base - Tempo: 90 segundos
+
+      // Astrazeneca - Página 2: Base (90s)
       "https://app.powerbi.com/view?r=eyJrIjoiYjA5MWMzOGYtYzE2OC00ZDc5LTgyNTQtMzFhZWNjYjI4MzU0IiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=5cf509df9ea97c783299",
-      // Dashboard Astrazeneca - Page 3: Outros - Tempo: 45 segundos
+
+      // Astrazeneca - Página 3: Outros (45s)
       "https://app.powerbi.com/view?r=eyJrIjoiYjA5MWMzOGYtYzE2OC00ZDc5LTgyNTQtMzFhZWNjYjI4MzU0IiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=29c7d977a21ac24c3843",
-      // Dashboard Ocorrências - Page 1: Ocorrências - Tempo: 45 segundos
+
+      // Ocorrências - Página 1: Ocorrências (45s)
       "https://app.powerbi.com/view?r=eyJrIjoiODI0MDNlYmItZGM5Ny00ZjFjLTg3OTUtMTRkMGY1ODNiODRhIiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9",
-      // Dashboard Carbono - Page 1: Carbono - Tempo: 45 segundos
+
+      // Carbono - Página 1: Carbono (45s)
       "https://app.powerbi.com/view?r=eyJrIjoiNjEzODVlYTctODg2MS00MGVjLTg0MTItZjJkNzE2NGMxMjg4IiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9"
     ];
 
-    // Tempos específicos para cada dashboard em milissegundos
+    // Tempos para exibição de cada dashboard (em milissegundos)
     const dashboardDisplayTimes = [
-      60000,  // Dashboard Recebimentos - Page 1: Recebimentos
-      60000,  // Dashboard Recebimentos - Page 3: Notificações
-      300000, // Dashboard Coletas - Page 1: Controle
-      60000,  // Dashboard Coletas - Page 2: Coletas
-      60000,  // Dashboard Entregas - Page 2: Entregas
-      60000,  // Dashboard Astrazeneca - Page 1: Overview
-      90000,  // Dashboard Astrazeneca - Page 2: Base
-      45000,  // Dashboard Astrazeneca - Page 3: Outros
-      45000,  // Dashboard Ocorrências - Page 1: Ocorrências
-      45000   // Dashboard Carbono - Page 1: Carbono
+      60000,  // Recebimentos - Página 1
+      60000,  // Recebimentos - Página 3
+      300000, // Coletas - Página 1 (5 minutos)
+      60000,  // Coletas - Página 2
+      60000,  // Entregas - Página 2
+      60000,  // Astrazeneca - Página 1
+      90000,  // Astrazeneca - Página 2
+      45000,  // Astrazeneca - Página 3
+      45000,  // Ocorrências - Página 1
+      45000   // Carbono - Página 1
     ];
 
     const video = document.getElementById('videoFrame');
     const iframe = document.getElementById('dashboardFrame');
     let currentDashboard = 0;
 
+    // Exibe o vídeo
     function showVideo() {
       iframe.classList.remove('visible');
+      iframe.src = '';
       video.classList.add('visible');
       video.currentTime = 0;
 
-      // Garante que o vídeo carregue antes de começar
-      video.pause();
-      video.addEventListener('loadedmetadata', () => {
-        video.play();
-      }, { once: true });
+      if (video.readyState >= 2) {
+        video.play().catch(() => showDashboards());
+      } else {
+        video.addEventListener('loadeddata', () => {
+          video.play().catch(() => showDashboards());
+        }, { once: true });
+      }
     }
 
+    // Exibe os dashboards em sequência
     function showDashboards() {
       video.classList.remove('visible');
       iframe.classList.add('visible');
@@ -112,11 +131,11 @@
       }, time);
     }
 
-    // Eventos para alternância entre vídeo e dashboards
+    // Eventos de término e erro do vídeo
     video.addEventListener('ended', showDashboards);
     video.addEventListener('error', showDashboards);
 
-    // Iniciar ciclo com o vídeo primeiro
+    // Inicia o ciclo com o vídeo primeiro
     showVideo();
   </script>
 </body>
