@@ -21,7 +21,6 @@
       left: 0;
       transition: opacity 0.5s ease;
     }
-    /* Classe que torna visível o elemento */
     iframe.visible, video.visible {
       opacity: 1;
       display: block !important;
@@ -30,20 +29,22 @@
   </style>
 </head>
 <body>
-  <!-- Área para dashboards -->
+  <!-- Área onde será exibido o dashboard -->
   <iframe id="dashboardFrame" allowfullscreen></iframe>
-  <!-- Vídeo de início -->
+
+  <!-- Vídeo Outubro Rosa Safelab: começa a sequência -->
   <video
     id="videoFrame"
-    src="https://raw.githubusercontent.com/brunosafelab/dash/main/media/outubro_rosa_safelab.mp4"
+    src="media/outubro_rosa_safelab.mp4"
     type="video/mp4"
     autoplay
     muted
     playsinline>
     Seu navegador não suporta vídeo HTML5.
   </video>
+
   <script>
-    // Lista de URLs dos dashboards (com comentários identificando cada um)
+    // Lista de dashboards com comentários (ordem e identificação)
     const dashboards = [
       // Recebimentos - Página 1
       "https://app.powerbi.com/view?r=eyJrIjoiNzU2YzM4MGEtZDkxOS00ZmQ3LTg2YWYtYWM5MWM1Y2VmOTdkIiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=e100614b95e6a2450e58",
@@ -67,68 +68,61 @@
       "https://app.powerbi.com/view?r=eyJrIjoiNjEzODVlYTctODg2MS00MGVjLTg0MTItZjJkNzE2NGMxMjg4IiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9"
     ];
 
-    // Tempos de exibição (em ms)
+    // Tempos em ms (com comentários indicando cada tempo correspondente ao dashboard)
     const dashboardDisplayTimes = [
-      60000,  // Recebimentos - Página 1
-      60000,  // Recebimentos - Página 3
-      300000, // Coletas - Página 1 (5 min)
-      60000,  // Coletas - Página 2
-      60000,  // Entregas - Página 2
-      60000,  // Astrazeneca - Página 1
-      90000,  // Astrazeneca - Página 2
-      45000,  // Astrazeneca - Página 3
-      45000,  // Ocorrências - Página 1
-      45000   // Carbono - Página 1
+      60000,   // Recebimentos - Página 1
+      60000,   // Recebimentos - Página 3
+      300000,  // Coletas - Página 1 (5 minutos)
+      60000,   // Coletas - Página 2
+      60000,   // Entregas - Página 2
+      60000,   // Astrazeneca - Página 1
+      90000,   // Astrazeneca - Página 2
+      45000,   // Astrazeneca - Página 3
+      45000,   // Ocorrências - Página 1
+      45000    // Carbono - Página 1
     ];
 
     const video = document.getElementById('videoFrame');
     const iframe = document.getElementById('dashboardFrame');
     let currentDashboard = 0;
 
-    // Função para iniciar com o vídeo
+    // Exibe o vídeo de início (sempre inicia por aqui)
     function showVideo() {
       iframe.classList.remove('visible');
-      iframe.src = ''; // Limpa o iframe
+      iframe.src = '';
       video.classList.add('visible');
       video.currentTime = 0;
-      // Tenta reproduzir o vídeo assim que estiver pronto
       if (video.readyState >= 2) {
         video.play().catch(() => showDashboards());
       } else {
-        // Aguarda o carregamento
         video.addEventListener('loadeddata', () => {
           video.play().catch(() => showDashboards());
         }, { once: true });
       }
     }
 
-    // Função para mostrar dashboards
+    // Exibe os dashboards em sequência
     function showDashboards() {
-      // Esconde o vídeo
       video.classList.remove('visible');
-      // Mostra o dashboard atual
       iframe.classList.add('visible');
       iframe.src = dashboards[currentDashboard];
-
-      // Agenda a próxima troca
       const time = dashboardDisplayTimes[currentDashboard];
       setTimeout(() => {
         currentDashboard++;
         if (currentDashboard < dashboards.length) {
           showDashboards();
         } else {
-          // Reinicia o ciclo, voltando ao vídeo
           currentDashboard = 0;
-          showVideo();
+          showVideo(); // VOLTA PARA O VÍDEO
         }
       }, time);
     }
 
-    // Eventos de fim ou erro do vídeo para avançar
+    // Eventos para quando o vídeo terminar ou der erro
     video.addEventListener('ended', showDashboards);
     video.addEventListener('error', showDashboards);
 
-    // Começa com o vídeo
+    // Garante que começa pelo vídeo
     showVideo();
   </script>
 </body>
