@@ -34,14 +34,14 @@
   <!-- Exibe dashboards -->
   <iframe id="dashboardFrame" allowfullscreen></iframe>
 
-  <!-- Exibe vídeo de abertura (Outubro Rosa) -->
+  <!-- Vídeo mantido no código, porém oculto temporariamente -->
   <video
     id="videoFrame"
     src="media/outubro_rosa_safelab.mp4"
     type="video/mp4"
-    autoplay
     muted
-    playsinline>
+    playsinline
+    style="display:none;">
     Seu navegador não suporta vídeo HTML5.
   </video>
 
@@ -82,7 +82,7 @@
       "https://app.powerbi.com/view?r=eyJrIjoiNjEzODVlYTctODg2MS00MGVjLTg0MTItZjJkNzE2NGMxMjg4IiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9"
     ];
 
-    // Tempos (em milissegundos)
+    // Tempos (em milissegundos) para cada dashboard, comentados com qual dashboard corresponde
     const dashboardDisplayTimes = [
       60000,  // Recebimentos - Página 1
       60000,  // Recebimentos - Página 3
@@ -101,7 +101,8 @@
     const iframe = document.getElementById('dashboardFrame');
     let currentDashboard = 0;
 
-    // Função para exibir o vídeo (início e reinício)
+    // Função que exibe o vídeo — comentada para não ser usada temporariamente
+    /*
     function showVideo() {
       iframe.classList.remove('visible');
       iframe.src = '';
@@ -114,8 +115,9 @@
         video.play().catch(() => showDashboards());
       }, { once: true });
     }
+    */
 
-    // Função para alternar dashboards
+    // Função que alterna entre dashboards
     function showDashboards() {
       video.classList.remove('visible');
       iframe.classList.add('visible');
@@ -127,21 +129,21 @@
         if (currentDashboard < dashboards.length) {
           showDashboards();
         } else {
-          currentDashboard = 0; // Reinicia sequência
-          showVideo(); // Volta ao vídeo e o ciclo recomeça
+          currentDashboard = 0;
+          // showVideo(); // voltando ao vídeo — comentado para não exibir
+          showDashboards(); // reinicia o ciclo só com dashboards
         }
       }, time);
     }
 
-    // Eventos do vídeo
+    // Eventos do vídeo — comentados para evitar ativação
+    /*
     video.addEventListener('ended', showDashboards);
     video.addEventListener('error', showDashboards);
+    */
 
-    // Inicia ciclo pelo vídeo
-    showVideo();
+    // Inicia ciclo diretamente nos dashboards, sem exibir o vídeo
+    showDashboards();
   </script>
 </body>
 </html>
-
-
-
