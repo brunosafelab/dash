@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Safelab Dashboards e Vídeo Outubro Rosa</title>
+  <title>Safelab Dashboards e Vídeo Novembro Azul</title>
   <style>
     body, html {
       margin: 0;
@@ -37,7 +37,7 @@
   <!-- Vídeo mantido no código, porém oculto temporariamente -->
   <video
     id="videoFrame"
-    src="media/outubro_rosa_safelab.mp4"
+    src="media/Novembro-Azul2.mp4"
     type="video/mp4"
     muted
     playsinline
@@ -106,7 +106,7 @@
     let currentDashboard = 0;
 
     // Função que exibe o vídeo — comentada para não ser usada temporariamente
-    /*
+    // /*
     function showVideo() {
       iframe.classList.remove('visible');
       iframe.src = '';
@@ -119,7 +119,7 @@
         video.play().catch(() => showDashboards());
       }, { once: true });
     }
-    */
+    // */
 
     // Função que alterna entre dashboards
     function showDashboards() {
@@ -134,21 +134,22 @@
           showDashboards();
         } else {
           currentDashboard = 0;
-          // showVideo(); // voltando ao vídeo — comentado para não exibir
+          showVideo(); // voltando ao vídeo — comentado para não exibir
           showDashboards(); // reinicia o ciclo só com dashboards
         }
       }, time);
     }
 
     // Eventos do vídeo — comentados para evitar ativação
-    /*
+   // /*
     video.addEventListener('ended', showDashboards);
     video.addEventListener('error', showDashboards);
-    */
+   // */
 
     // Inicia ciclo diretamente nos dashboards, sem exibir o vídeo
     showDashboards();
   </script>
 </body>
 </html>
+
 
