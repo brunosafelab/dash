@@ -106,7 +106,7 @@
     let currentDashboard = 0;
 
     // Função que exibe o vídeo — comentada para não ser usada temporariamente
-    // /*
+    // 
     function showVideo() {
       iframe.classList.remove('visible');
       iframe.src = '';
@@ -119,7 +119,7 @@
         video.play().catch(() => showDashboards());
       }, { once: true });
     }
-    // */
+    //
 
     // Função que alterna entre dashboards
     function showDashboards() {
@@ -141,15 +141,16 @@
     }
 
     // Eventos do vídeo — comentados para evitar ativação
-   // /*
+   // 
     video.addEventListener('ended', showDashboards);
     video.addEventListener('error', showDashboards);
-   // */
+   // 
 
     // Inicia ciclo diretamente nos dashboards, sem exibir o vídeo
     showDashboards();
   </script>
 </body>
 </html>
+
 
 
