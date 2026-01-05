@@ -47,6 +47,9 @@
   <script>
     // Lista dos dashboards Power BI com comentários identificando cada página
     const dashboards = [
+      // Expedição - Página 1: Expedições Diário
+      "https://app.powerbi.com/view?r=eyJrIjoiMDc5NDY3ZGEtZjVjNS00Zjg0LWFjZDItZDY0ODIyZjUwZjY5IiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=524fb13c05a7b44de359",
+      
       // Recebimentos - Página 1: Recebimentos
       "https://app.powerbi.com/view?r=eyJrIjoiNzU2YzM4MGEtZDkxOS00ZmQ3LTg2YWYtYWM5MWM1Y2VmOTdkIiwidCI6ImMzNzU1ZTQ4LTk1NTUtNDNkNS1iNDc5LTc0YmYwYmVlZThkOCJ9&pageName=e100614b95e6a2450e58",
 
@@ -86,6 +89,7 @@
 
     // Tempos (em milissegundos) para cada dashboard, comentados com qual dashboard corresponde
     const dashboardDisplayTimes = [
+      90000,  // Expedição - Página 2
       60000,  // Recebimentos - Página 1
       60000,  // Recebimentos - Página 3
       300000, // Coletas - Página 1 (5 minutos)
@@ -152,4 +156,5 @@
   </script>
 </body>
 </html>
+
 
