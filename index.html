@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Safelab Dashboards e Vídeo Novembro Azul</title>
+  <title>Safelab & CSW</title>
   <style>
     body, html {
       margin: 0;
@@ -37,7 +37,7 @@
   <!-- Vídeo mantido no código -->
   <video
     id="videoFrame"
-    src="media/Novembro-Azul.mp4"
+    src="media/Vinhet-Setembro-Amarelo-Safelab-e-CSW.mp4"
     type="video/mp4"
     muted
     playsinline>
@@ -95,13 +95,13 @@
 
     // Tempos (em milissegundos) para cada dashboard, comentados com qual dashboard corresponde
     const dashboardDisplayTimes = [
-      90000,  // Expedição - Página 2
+      90000,  // Expedição - Página 1
       60000,  // Recebimentos - Página 1
       60000,  // Recebimentos - Página 3
-      180000, // Coletas - Página 1 (5 minutos)
+      180000, // Coletas - Página 1 (3 minutos)
       60000,  // Coletas - Página 2
       60000,  // Coletas - Página 3
-      180000, // Entregas - Página 1
+      180000, // Entregas - Página 1 (3 minutos)
       60000,  // Entregas - Página 2
       60000,  // Entregas - Página 3
       60000,  // Astrazeneca - Página 1
@@ -125,24 +125,26 @@
       video.currentTime = 0;
       video.load();
 
-      video.addEventListener('canplay', () => {
+      // Usa propriedades (onX) em vez de addEventListener para não acumular
+      // listeners a cada ciclo, o que poderia disparar a troca em dobro
+      video.oncanplay = () => {
+        video.oncanplay = null;
         video.play().catch(() => showDashboards());
-      }, { once: true });
+      };
 
-      // Quando o vídeo terminar, chama a função para mostrar os dashboards
-      video.addEventListener('ended', () => {
-        video.classList.remove('visible');
-        showDashboards();
-      }, { once: true });
+      // Quando o vídeo terminar, volta para os dashboards
+      video.onended = () => showDashboards();
 
-      video.addEventListener('error', () => {
-        video.classList.remove('visible');
-        showDashboards();
-      }, { once: true });
+      // Se o vídeo não carregar, segue para os dashboards
+      video.onerror = () => showDashboards();
     }
 
     // Função que alterna entre dashboards
     function showDashboards() {
+      video.oncanplay = null;
+      video.onended = null;
+      video.onerror = null;
+      video.pause();
       video.classList.remove('visible');
       iframe.classList.add('visible');
       iframe.src = dashboards[currentDashboard];
@@ -164,5 +166,3 @@
   </script>
 </body>
 </html>
-
-
